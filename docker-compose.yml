@@ -1,14 +1,56 @@
+version: '3.8'
 services:
+
   stats-server:
+    build: ./ewm-stat-service/stat_server
+
+    image:
+      stat_server:latest
+    container_name: stat_server
+
     ports:
       - "9090:9090"
 
-  stats-db:
+    depends_on:
+      - stats_service-db
+    environment:
+      - STAT_URL_DB=jdbc:postgresql://stat_server-db:5432/stat_db
+      - STAT_USERNAME_DB=postgres
+
+
+  stats_service-db:
     image: postgres:16.1
+    container_name: stat_server-db
+    ports:
+      - "6666:5432"
+    environment:
+      - POSTGRES_DB=stat_db
+      - POSTGRES_USER=postgres
+
+
 
   ewm-service:
+    build: ./ewm-main-service
+    image:
+      ewm-service:latest
+    container_name: ewm-service
+
     ports:
       - "8080:8080"
 
+    depends_on:
+      - ewm-db
+    environment:
+      - MAIN_DB=jdbc:postgresql://postgres-main-db:5432/ewm_db
+      - MAIN_USER=postgres
+
   ewm-db:
     image: postgres:16.1
+    container_name: postgres-main-db
+    ports:
+      - "6464:5432"
+    depends_on:
+      - stats-server
+    environment:
+      - POSTGRES_DB=ewm_db
+      - POSTGRES_USER=postgres

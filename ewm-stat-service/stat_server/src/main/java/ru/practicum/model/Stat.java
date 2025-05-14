@@ -7,16 +7,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-@EqualsAndHashCode
 @Entity
+@Getter
+@Setter
+@ToString
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Stat {
@@ -37,4 +39,19 @@ public class Stat {
 
     @Column(name = "uri")
     private String uri;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Stat stat = (Stat) o;
+
+        return statId == stat.statId;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (statId ^ (statId >>> 32));
+    }
 }

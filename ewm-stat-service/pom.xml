@@ -11,10 +11,19 @@
 
     <artifactId>ewm-stat-service</artifactId>
     <packaging>pom</packaging>
+
     <modules>
-        <module>stat_client</module>
-        <module>stat_dto</module>
         <module>stat_server</module>
+        <module>stat-dto</module>
+        <module>stat_client</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>

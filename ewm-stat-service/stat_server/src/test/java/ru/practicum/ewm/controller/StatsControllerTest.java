@@ -1,4 +1,4 @@
-package ru.practicum.controller;
+package ru.practicum.ewm.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,27 +8,25 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.dto.StatDto;
-import ru.practicum.dto.StatResponseDto;
-import ru.practicum.service.StatService;
+import ru.practicum.ewm.EndpointHit;
+import ru.practicum.ewm.ViewStats;
+import ru.practicum.ewm.ViewsStatsRequest;
+import ru.practicum.ewm.service.StatsService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.practicum.utill.Constants.DATE_FORMAT;
 
-@WebMvcTest(StatServiceController.class)
-class StatServiceControllerTest {
-
+@WebMvcTest(StatsController.class)
+class StatsControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -36,11 +34,11 @@ class StatServiceControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private StatService statService;
+    private StatsService statsService;
 
-    private StatDto statDto;
-    private StatResponseDto statResponseDto;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+    private EndpointHit endpointHit;
+    private ViewStats viewStats;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private String startStr;
     private String endStr;
 
@@ -49,41 +47,37 @@ class StatServiceControllerTest {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime start = now.minusDays(1);
         LocalDateTime end = now;
-
         startStr = start.format(formatter);
         endStr = end.format(formatter);
 
-        statDto = StatDto.builder()
+        endpointHit = EndpointHit.builder()
                 .app("ewm-main-service")
                 .uri("/events/1")
                 .ip("192.168.1.1")
                 .timestamp(now)
                 .build();
 
-        statResponseDto = StatResponseDto.builder()
+        viewStats = ViewStats.builder()
                 .app("ewm-main-service")
                 .uri("/events/1")
-                .hits(5)
+                .hits(5L)
                 .build();
     }
 
     @Test
-    void addStatEvent_ShouldReturnCreatedStatus() throws Exception {
-        when(statService.createStat(any(StatDto.class))).thenReturn(statDto);
+    void hit_ShouldReturnCreatedStatus() throws Exception {
+        doNothing().when(statsService).saveHit(any(EndpointHit.class));
 
         mockMvc.perform(post("/hit")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(statDto)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.app").value(statDto.getApp()))
-                .andExpect(jsonPath("$.uri").value(statDto.getUri()))
-                .andExpect(jsonPath("$.ip").value(statDto.getIp()));
+                        .content(objectMapper.writeValueAsString(endpointHit)))
+                .andExpect(status().isCreated());
     }
 
     @Test
-    void readStatEvent_ShouldReturnOkStatus() throws Exception {
-        List<StatResponseDto> stats = List.of(statResponseDto);
-        when(statService.readStat(any(LocalDateTime.class), any(LocalDateTime.class), anyList(), anyBoolean()))
+    void getStats_ShouldReturnOkStatus() throws Exception {
+        List<ViewStats> stats = List.of(viewStats);
+        when(statsService.getViewStatsList(any(ViewsStatsRequest.class)))
                 .thenReturn(stats);
 
         mockMvc.perform(get("/stats")
@@ -92,31 +86,32 @@ class StatServiceControllerTest {
                         .param("uris", "/events/1")
                         .param("unique", "false"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].app").value(statResponseDto.getApp()))
-                .andExpect(jsonPath("$[0].uri").value(statResponseDto.getUri()))
-                .andExpect(jsonPath("$[0].hits").value(statResponseDto.getHits()));
+                .andExpect(jsonPath("$[0].app").value(viewStats.getApp()))
+                .andExpect(jsonPath("$[0].uri").value(viewStats.getUri()))
+                .andExpect(jsonPath("$[0].hits").value(viewStats.getHits()));
     }
 
     @Test
-    void addStatEvent_WithInvalidData_ShouldReturnStatus201() throws Exception {
-        StatDto minimalDto = new StatDto();
-        minimalDto.setApp("test-app");
-        minimalDto.setUri("/test");
-        minimalDto.setIp("127.0.0.1");
-        minimalDto.setTimestamp(LocalDateTime.now());
+    void hit_WithMinimalData_ShouldReturnCreatedStatus() throws Exception {
+        EndpointHit minimalHit = EndpointHit.builder()
+                .app("test-app")
+                .uri("/test")
+                .ip("127.0.0.1")
+                .timestamp(LocalDateTime.now())
+                .build();
 
-        when(statService.createStat(any(StatDto.class))).thenReturn(minimalDto);
+        doNothing().when(statsService).saveHit(any(EndpointHit.class));
 
         mockMvc.perform(post("/hit")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(minimalDto)))
+                        .content(objectMapper.writeValueAsString(minimalHit)))
                 .andExpect(status().isCreated());
     }
 
     @Test
-    void readStatEvent_WithInvalidTimeRange_ShouldReturnSuccessfulStatus() throws Exception {
-        List<StatResponseDto> stats = List.of(statResponseDto);
-        when(statService.readStat(any(LocalDateTime.class), any(LocalDateTime.class), anyList(), anyBoolean()))
+    void getStats_WithoutUris_ShouldReturnOkStatus() throws Exception {
+        List<ViewStats> stats = List.of(viewStats);
+        when(statsService.getViewStatsList(any(ViewsStatsRequest.class)))
                 .thenReturn(stats);
 
         mockMvc.perform(get("/stats")

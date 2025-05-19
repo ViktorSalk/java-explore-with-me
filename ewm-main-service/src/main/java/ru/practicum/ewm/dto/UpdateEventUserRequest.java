@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.practicum.ewm.model.enums.EventUserState;
+import ru.practicum.ewm.model.constants.EventUserState;
 
 @Getter
 @Setter

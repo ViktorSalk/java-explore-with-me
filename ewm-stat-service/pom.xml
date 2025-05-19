@@ -13,17 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>stat_server</module>
         <module>stat-dto</module>
-        <module>stat_client</module>
+        <module>stat-client</module>
+        <module>stat-server</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-
 </project>

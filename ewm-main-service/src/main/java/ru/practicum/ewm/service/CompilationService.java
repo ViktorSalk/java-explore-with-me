@@ -1,4 +1,4 @@
-package ru.practicum.ewm;
+package ru.practicum.ewm.service;
 
 import ru.practicum.ewm.dto.CompilationDto;
 import ru.practicum.ewm.dto.NewCompilationDto;

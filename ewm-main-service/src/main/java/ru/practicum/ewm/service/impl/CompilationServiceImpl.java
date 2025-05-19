@@ -1,4 +1,4 @@
-package ru.practicum.ewm.impl;
+package ru.practicum.ewm.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +14,7 @@ import ru.practicum.ewm.model.event.Event;
 import ru.practicum.ewm.model.mappers.CompilationMapper;
 import ru.practicum.ewm.repository.CompilationRepository;
 import ru.practicum.ewm.repository.event.EventRepository;
-import ru.practicum.ewm.CompilationService;
+import ru.practicum.ewm.service.CompilationService;
 
 import java.util.ArrayList;
 import java.util.Collections;

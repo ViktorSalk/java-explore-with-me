@@ -1,4 +1,4 @@
-package ru.practicum.ewm.impl;
+package ru.practicum.ewm.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -10,7 +10,7 @@ import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.model.User;
 import ru.practicum.ewm.model.mappers.UserMapper;
 import ru.practicum.ewm.repository.UserRepository;
-import ru.practicum.ewm.UserService;
+import ru.practicum.ewm.service.UserService;
 
 import java.util.List;
 import java.util.stream.Collectors;

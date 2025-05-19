@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.dto.NewUserRequest;
 import ru.practicum.ewm.dto.UserDto;
-import ru.practicum.ewm.UserService;
+import ru.practicum.ewm.service.UserService;
 
 import java.util.List;
 

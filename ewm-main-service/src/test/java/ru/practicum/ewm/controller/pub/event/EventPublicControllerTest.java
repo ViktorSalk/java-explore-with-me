@@ -10,10 +10,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import ru.practicum.ewm.dto.CategoryDto;
-import ru.practicum.ewm.dto.SearchEventParams;
-import ru.practicum.ewm.dto.UserShortDto;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.EventShortDto;
+import ru.practicum.ewm.dto.SearchEventParams;
+import ru.practicum.ewm.dto.UserShortDto;
 import ru.practicum.ewm.model.constants.EventStatus;
 import ru.practicum.ewm.service.event.EventService;
 

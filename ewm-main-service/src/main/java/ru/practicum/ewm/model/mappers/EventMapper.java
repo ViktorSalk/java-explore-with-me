@@ -1,9 +1,9 @@
 package ru.practicum.ewm.model.mappers;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.ewm.dto.NewEventDto;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.EventShortDto;
+import ru.practicum.ewm.dto.NewEventDto;
 import ru.practicum.ewm.model.event.Event;
 
 import java.util.ArrayList;

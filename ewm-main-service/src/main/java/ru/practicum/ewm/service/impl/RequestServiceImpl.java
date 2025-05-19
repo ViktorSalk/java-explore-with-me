@@ -1,4 +1,4 @@
-package ru.practicum.ewm.impl;
+package ru.practicum.ewm.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -6,16 +6,16 @@ import ru.practicum.ewm.dto.ParticipationRequestDto;
 import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.exception.UncorrectedParametersException;
+import ru.practicum.ewm.model.event.Event;
 import ru.practicum.ewm.model.Request;
 import ru.practicum.ewm.model.User;
 import ru.practicum.ewm.model.constants.EventStatus;
 import ru.practicum.ewm.model.constants.RequestStatus;
-import ru.practicum.ewm.model.event.Event;
 import ru.practicum.ewm.model.mappers.RequestMapper;
+import ru.practicum.ewm.repository.event.EventRepository;
 import ru.practicum.ewm.repository.RequestRepository;
 import ru.practicum.ewm.repository.UserRepository;
-import ru.practicum.ewm.repository.event.EventRepository;
-import ru.practicum.ewm.RequestService;
+import ru.practicum.ewm.service.RequestService;
 
 import java.time.LocalDateTime;
 import java.util.List;

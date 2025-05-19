@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.ewm.dto.NewEventDto;
-import ru.practicum.ewm.dto.ParticipationRequestDto;
-import ru.practicum.ewm.dto.UpdateEventUserRequest;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.EventRequestStatusUpdateRequest;
 import ru.practicum.ewm.dto.event.EventRequestStatusUpdateResult;
 import ru.practicum.ewm.dto.event.EventShortDto;
-import ru.practicum.ewm.event.EventService;
+import ru.practicum.ewm.dto.NewEventDto;
+import ru.practicum.ewm.dto.ParticipationRequestDto;
+import ru.practicum.ewm.dto.UpdateEventUserRequest;
+import ru.practicum.ewm.service.event.EventService;
 
 import java.util.List;
 

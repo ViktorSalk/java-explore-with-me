@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.ewm.dto.SearchEventParams;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.EventShortDto;
-import ru.practicum.ewm.event.EventService;
+import ru.practicum.ewm.dto.SearchEventParams;
+import ru.practicum.ewm.service.event.EventService;
 
 import java.util.List;
 

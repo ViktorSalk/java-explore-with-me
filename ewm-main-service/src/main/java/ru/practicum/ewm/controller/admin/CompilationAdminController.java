@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.dto.CompilationDto;
 import ru.practicum.ewm.dto.NewCompilationDto;
 import ru.practicum.ewm.dto.UpdateCompilationDto;
-import ru.practicum.ewm.CompilationService;
+import ru.practicum.ewm.service.CompilationService;
 
 @RestController
 @Slf4j

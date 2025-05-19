@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.dto.CategoryDto;
 import ru.practicum.ewm.dto.NewCategoryDto;
-import ru.practicum.ewm.CategoryService;
+import ru.practicum.ewm.service.CategoryService;
 
 @Slf4j
 @Validated

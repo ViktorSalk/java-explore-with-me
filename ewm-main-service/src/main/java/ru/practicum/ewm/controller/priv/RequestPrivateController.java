@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.dto.ParticipationRequestDto;
-import ru.practicum.ewm.RequestService;
+import ru.practicum.ewm.service.RequestService;
 
 import java.util.List;
 

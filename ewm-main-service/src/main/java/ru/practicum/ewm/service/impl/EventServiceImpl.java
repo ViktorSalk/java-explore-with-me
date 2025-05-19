@@ -1,4 +1,4 @@
-package ru.practicum.ewm.impl;
+package ru.practicum.ewm.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +17,10 @@ import ru.practicum.ewm.EndpointHit;
 import ru.practicum.ewm.StatsClient;
 import ru.practicum.ewm.ViewStats;
 import ru.practicum.ewm.dto.CaseUpdatedStatusDto;
+import ru.practicum.ewm.dto.event.EventFullDto;
+import ru.practicum.ewm.dto.event.EventRequestStatusUpdateRequest;
+import ru.practicum.ewm.dto.event.EventRequestStatusUpdateResult;
+import ru.practicum.ewm.dto.event.EventShortDto;
 import ru.practicum.ewm.dto.NewEventDto;
 import ru.practicum.ewm.dto.ParticipationRequestDto;
 import ru.practicum.ewm.dto.SearchEventParams;
@@ -24,14 +28,11 @@ import ru.practicum.ewm.dto.SearchEventParamsAdmin;
 import ru.practicum.ewm.dto.UpdateEventAdminRequest;
 import ru.practicum.ewm.dto.UpdateEventRequest;
 import ru.practicum.ewm.dto.UpdateEventUserRequest;
-import ru.practicum.ewm.dto.event.EventFullDto;
-import ru.practicum.ewm.dto.event.EventRequestStatusUpdateRequest;
-import ru.practicum.ewm.dto.event.EventRequestStatusUpdateResult;
-import ru.practicum.ewm.dto.event.EventShortDto;
 import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.exception.UncorrectedParametersException;
 import ru.practicum.ewm.model.Category;
+import ru.practicum.ewm.model.event.Event;
 import ru.practicum.ewm.model.Location;
 import ru.practicum.ewm.model.Request;
 import ru.practicum.ewm.model.User;
@@ -39,16 +40,15 @@ import ru.practicum.ewm.model.constants.EventAdminState;
 import ru.practicum.ewm.model.constants.EventStatus;
 import ru.practicum.ewm.model.constants.EventUserState;
 import ru.practicum.ewm.model.constants.RequestStatus;
-import ru.practicum.ewm.model.event.Event;
 import ru.practicum.ewm.model.mappers.EventMapper;
 import ru.practicum.ewm.model.mappers.LocationMapper;
 import ru.practicum.ewm.model.mappers.RequestMapper;
 import ru.practicum.ewm.repository.CategoryRepository;
+import ru.practicum.ewm.repository.event.EventRepository;
 import ru.practicum.ewm.repository.LocationRepository;
 import ru.practicum.ewm.repository.RequestRepository;
 import ru.practicum.ewm.repository.UserRepository;
-import ru.practicum.ewm.repository.event.EventRepository;
-import ru.practicum.ewm.event.EventService;
+import ru.practicum.ewm.service.event.EventService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -210,7 +210,7 @@ public class EventServiceImpl implements EventService {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException("Пользователь с id= " + userId + " не найден");
         }
-        PageRequest pageRequest = PageRequest.of(from / size, size, Sort.by(Sort.Direction.ASC, "id"));
+        PageRequest pageRequest = PageRequest.of(from / size, size, org.springframework.data.domain.Sort.by(Sort.Direction.ASC, "id"));
         return eventRepository.findAll(pageRequest).getContent()
                 .stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
     }

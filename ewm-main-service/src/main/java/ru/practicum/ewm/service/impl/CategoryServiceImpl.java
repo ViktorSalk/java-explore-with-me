@@ -1,4 +1,4 @@
-package ru.practicum.ewm.impl;
+package ru.practicum.ewm.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +12,7 @@ import ru.practicum.ewm.model.event.Event;
 import ru.practicum.ewm.model.mappers.CategoryMapper;
 import ru.practicum.ewm.repository.CategoryRepository;
 import ru.practicum.ewm.repository.event.EventRepository;
-import ru.practicum.ewm.CategoryService;
+import ru.practicum.ewm.service.CategoryService;
 
 import java.util.List;
 import java.util.stream.Collectors;

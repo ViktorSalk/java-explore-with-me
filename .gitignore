@@ -1,7 +1,7 @@
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/mainservice/**/target/
+!**/src/main/**/target/
 !**/src/test/**/target/
 
 ### STS ###
@@ -14,7 +14,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-../ExploreWithMeTest/.idea
+.idea
 *.iws
 *.iml
 *.ipr
